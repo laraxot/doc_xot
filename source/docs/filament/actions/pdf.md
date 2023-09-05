@@ -99,7 +99,7 @@ class PdfController extends Controller
                 Tables\Actions\Action::make('pdf') 
                     ->label('PDF')
                     ->color('success')
-                    ->icon('heroicon-o-document-download')
+                    ->icon('heroicon-o-document-arrow-down')
                     ->url(fn (Order $record) => route('pdf', $record))
                     ->openUrlInNewTab(), 
             ])
