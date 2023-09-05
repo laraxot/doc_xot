@@ -412,7 +412,7 @@ use Barryvdh\DomPDF\Facade\Pdf;</p>
             Tables\Actions\Action::make('pdf') 
                 -&gt;label('PDF')
                 -&gt;color('success')
-                -&gt;icon('heroicon-o-document-download')
+                -&gt;icon('heroicon-o-document-arrow-down')
                 -&gt;url(fn (Order $record) =&gt; route('pdf', $record))
                 -&gt;openUrlInNewTab(), 
         ])
