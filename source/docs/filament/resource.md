@@ -34,6 +34,6 @@ use Filament\Resources\Resource;
 ```bash
 class UserResource extends Resource
 {
-    ////use ContextualResource;
+    //
 }
 ```
