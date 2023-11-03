@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="Ripristinare cartella vendor">
+    <meta name="description" content="Moduli Filament">
 
     <meta property="og:site_name" content="Modulo Xot" />
-    <meta property="og:title" content="Ripristinare cartella vendor | Modulo Xot" />
-    <meta property="og:description" content="Ripristinare cartella vendor" />
-    <meta property="og:url" content="https://laraxot.github.io/module_xot/docs/filament/vendor" />
+    <meta property="og:title" content="Moduli Filament | Modulo Xot" />
+    <meta property="og:description" content="Moduli Filament" />
+    <meta property="og:url" content="https://laraxot.github.io/module_xot/docs/filament/modules" />
     <meta property="og:image" content="https://laraxot.github.io/module_xot/assets/img/logo.png" />
     <meta property="og:type" content="website" />
 
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     
-    <title>Modulo Xot | Ripristinare cartella vendor</title>
+    <title>Modulo Xot | Moduli Filament</title>
 
     <link rel="home" href="https://laraxot.github.io/module_xot/">
     <link rel="icon" href="/favicon.ico">
@@ -287,7 +287,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/module_xot/docs/filament/modules"
-            class="lvl1   nav-menu__item hover:text-blue-500"
+            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
         >
             Moduli
         </a>
@@ -314,7 +314,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/module_xot/docs/filament/vendor"
-            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
+            class="lvl1   nav-menu__item hover:text-blue-500"
         >
             Ripristinare cartella vendor
         </a>
@@ -326,16 +326,43 @@
         </nav>
 
         <div class="DocSearch-content w-full lg:w-3/5 break-words pb-16 lg:pl-4" v-pre>
-            <h1>Ripristinare la cartella vendor</h1>
+            <h1 id="moduli-filament">Moduli Filament</h1>
 
-<p>Per ripristinare la cartella laravel\resources\views\vendor dove si trovano tutti i file di filament eseguire:</p>
+<p>Url di riferimento https://github.com/savannabits/filament-modules<br />
+Installare il pacchetto di savannabits</p>
 
-<pre><code class="language-bash">php artisan vendor:publish
+<pre><code class="language-php">composer require coolsam/modules
 </code></pre>
 
-<p>digitare il numero 0 e premere invio</p>
+<p>Al suo interno si avrà già inglobato nwidart/laravel-modules.</p>
 
-<p>NB: La cartella non la sovrascrive perciò bisogna prima spostarla</p>
+<p>Per creare un modulo eseguire i comandi artisan di nwidart<br />
+url di riferimento https://nwidart.com/laravel-modules/v6/advanced-tools/artisan-commands</p>
+
+<pre><code class="language-php">php artisan module:make NomeModulo
+</code></pre>
+
+<p>Per creare l'AdminPanelProvider di filament nel modulo eseguire</p>
+
+<pre><code class="language-php">php artisan module:make-filament-panel admin NomeModulo # php artisan module:make-filament-panel [id] [module]
+</code></pre>
+
+<p>Sostituire il codice generato con</p>
+
+<pre><code class="language-php">&lt;?php
+
+declare(strict_types=1);
+
+namespace Modules\NomeModulo\Providers\Filament;
+
+use Modules\Xot\Providers\Filament\XotBasePanelProvider;
+
+class AdminPanelProvider extends XotBasePanelProvider
+{
+    protected string $module = 'NomeModulo';
+}
+
+</code></pre>
         </div>
     </div>
 </section>
