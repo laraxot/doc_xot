@@ -56,9 +56,10 @@ return [
         ],
     ],
     'Filament' => [
-        'url' => 'docs/filament',
+        // 'url' => 'docs/filament',
         'children' => [
             'Installazione' => 'docs/filament/installation',
+            'Moduli' => 'docs/filament/modules',
             'Creazione di una Resource' => 'docs/filament/resource',
             'Creazioni Pdf da azione' => 'docs/filament/actions/pdf',
             'Ripristinare cartella vendor' => 'docs/filament/vendor',
