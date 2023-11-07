@@ -55,6 +55,12 @@ return [
             'Filter' => 'docs/links/filter',
         ],
     ],
+    'Laragon' => [
+        // 'url' => '#',
+        'children' => [
+            'Aggiornare MySql a 8.0' => 'docs/laragon/update-mysql-8-0',
+        ],
+    ],
     'Filament' => [
         // 'url' => 'docs/filament',
         'children' => [
