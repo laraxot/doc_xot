@@ -16,7 +16,7 @@ return [
     'Jigsaw Docs' => 'https://jigsaw.tighten.co/docs/installation',
     */
     'Base' => [
-        'url' => 'docs/base',
+        // 'url' => 'docs/base',
         'children' => [
             'Installazione' => 'docs/base/installation',
             'Errori Comuni' => 'docs/base/issues',
@@ -25,13 +25,13 @@ return [
         ],
     ],
     'Config' => [
-        'url' => 'docs/config',
+        // 'url' => 'docs/config',
         'children' => [
             'Configurazione modules.php' => 'docs/config/modules',
         ],
     ],
     'Model Actions' => [
-        'url' => 'docs/model',
+        // 'url' => 'docs/model',
         'children' => [
             'Destroy' => 'docs/model/action/destroy',
             'Detach' => 'docs/model/action/detach',
@@ -41,7 +41,7 @@ return [
         ],
     ],
     'Services' => [
-        'url' => 'docs/service',
+        // 'url' => 'docs/service',
         'children' => [
             'Model' => 'docs/service/model',
             'Panel' => 'docs/service/panel',
@@ -50,7 +50,7 @@ return [
     ],
     'Custom Relation' => 'docs/custom-relation',
     'Links' => [
-        'url' => '#',
+        // 'url' => '#',
         'children' => [
             'Filter' => 'docs/links/filter',
         ],
