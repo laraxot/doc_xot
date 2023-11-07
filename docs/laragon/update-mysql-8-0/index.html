@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="Azioni Filament per creare PDF">
+    <meta name="description" content="Aggiornare Mysql a 8.0">
 
     <meta property="og:site_name" content="Modulo Xot" />
-    <meta property="og:title" content="Filament Action PDF | Modulo Xot" />
-    <meta property="og:description" content="Azioni Filament per creare PDF" />
-    <meta property="og:url" content="https://laraxot.github.io/doc_xot/docs/filament/actions/pdf" />
+    <meta property="og:title" content="Aggiornare Mysql a 8.0 | Modulo Xot" />
+    <meta property="og:description" content="Aggiornare Mysql a 8.0" />
+    <meta property="og:url" content="https://laraxot.github.io/doc_xot/docs/laragon/update-mysql-8-0" />
     <meta property="og:image" content="https://laraxot.github.io/doc_xot/assets/img/logo.png" />
     <meta property="og:type" content="website" />
 
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     
-    <title>Modulo Xot | Filament Action PDF</title>
+    <title>Modulo Xot | Aggiornare Mysql a 8.0</title>
 
     <link rel="home" href="https://laraxot.github.io/doc_xot/">
     <link rel="icon" href="/favicon.ico">
@@ -258,7 +258,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/doc_xot/docs/laragon/update-mysql-8-0"
-            class="lvl1   nav-menu__item hover:text-blue-500"
+            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
         >
             Aggiornare MySql a 8.0
         </a>
@@ -302,7 +302,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/doc_xot/docs/filament/actions/pdf"
-            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
+            class="lvl1   nav-menu__item hover:text-blue-500"
         >
             Creazioni Pdf da azione
         </a>
@@ -323,111 +323,9 @@
         </nav>
 
         <div class="DocSearch-content w-full lg:w-3/5 break-words pb-16 lg:pl-4" v-pre>
-            <h1>Metodo 1</h1>
+            <h1 id="update-mysql-to-8-0">Aggiornare Mysql a 8.0</h1>
 
-<p>file: app/Filament/Resources/Shop/OrderResource.php</p>
-
-<pre><code class="language-php"><br />use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Blade;
-
-class OrderResource extends Resource
-{
-    // ...
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            -&gt;columns([
-                // ...
-            ])
-            -&gt;filters([
-                // ...
-            ])
-            -&gt;actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('pdf') 
-                    -&gt;label('PDF')
-                    -&gt;color('success')
-                    -&gt;icon('heroicon-s-download')
-                    -&gt;action(function (Model $record) {
-                        return response()-&gt;streamDownload(function () use ($record) {
-                            echo Pdf::loadHtml(
-                                Blade::render('pdf', ['record' =&gt; $record])
-                            )-&gt;stream();
-                        }, $record-&gt;number . '.pdf');
-                    }), 
-            ])
-            -&gt;bulkActions([
-                // ...
-            ]);
-    }
-
-    // ...
-}
-</code></pre>
-
-<h1>Metodo 2 Passando per un controller</h1>
-
-<p>file: routes/web.php</p>
-
-<p>```php
-use App\Http\Livewire\Form;
-use App\Http\Controllers\PdfController;</p>
-
-<p>\Illuminate\Support\Facades\Route::get('form', Form::class);</p>
-
-<p>Route::get('pdf/{order}', PdfController::class)->name('pdf'); 
- ```</p>
-
-<p>file: app/Http/Controllers/PdfController.php
-```php
-use App\Models\Shop\Order;
-use Barryvdh\DomPDF\Facade\Pdf;</p>
-
-<p>class PdfController extends Controller
-{
-    public function __invoke(Order $order)
-    {
-        return Pdf::loadView('pdf', ['record' => $order])
-            ->download($order->number. '.pdf');
-    }
-}
- ```</p>
-
-<p>file: app/Filament/Resources/Shop/OrderResource.php
- ```php
- class OrderResource extends Resource
-{
-    // ...</p>
-
-<pre><code>public static function table(Table $table): Table
-{
-    return $table
-        -&gt;columns([
-            // ...
-        ])
-        -&gt;filters([
-            // ...
-        ])
-        -&gt;actions([
-            Tables\Actions\EditAction::make(),
-            Tables\Actions\Action::make('pdf') 
-                -&gt;label('PDF')
-                -&gt;color('success')
-                -&gt;icon('heroicon-o-document-arrow-down')
-                -&gt;url(fn (Order $record) =&gt; route('pdf', $record))
-                -&gt;openUrlInNewTab(), 
-        ])
-        -&gt;bulkActions([
-            // ...
-        ]);
-}
-
-// ...
-</code></pre>
-
-<p>}
- ```</p>
+<p>aaaaaa</p>
         </div>
     </div>
 </section>
