@@ -19,15 +19,15 @@ return [
         // 'url' => 'docs/base',
         'children' => [
             'Installazione' => 'docs/base/installation',
-            // 'Errori Comuni' => 'docs/base/issues',
             'Struttura' => 'docs/base/structure',
-            'Url Not Found' => 'docs/base/url-not-found',
+            
         ],
     ],
     'Errori Comuni' => [
         'url' => 'docs/base/issues',
         'children' => [
             '419 page expired' => 'docs/errors/page-expired',
+            'Url Not Found' => 'docs/errors/url-not-found',
         ],
     ],
     'Config' => [
