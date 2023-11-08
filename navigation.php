@@ -24,6 +24,12 @@ return [
             'Url Not Found' => 'docs/base/url-not-found',
         ],
     ],
+    'Errori Comuni' => [
+        'url' => 'docs/base/issues',
+        'children' => [
+            '419 page expired' => 'docs/errors/page-expired',
+        ],
+    ],
     'Config' => [
         // 'url' => 'docs/config',
         'children' => [
