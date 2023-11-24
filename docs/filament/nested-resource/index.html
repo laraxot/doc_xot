@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="Handle models with ModelService">
+    <meta name="description" content="Nested Resource">
 
     <meta property="og:site_name" content="Modulo Xot" />
-    <meta property="og:title" content="ModelService | Modulo Xot" />
-    <meta property="og:description" content="Handle models with ModelService" />
-    <meta property="og:url" content="https://laraxot.github.io/doc_xot/docs/service/model" />
+    <meta property="og:title" content="Nested Resource | Modulo Xot" />
+    <meta property="og:description" content="Nested Resource" />
+    <meta property="og:url" content="https://laraxot.github.io/doc_xot/docs/filament/nested-resource" />
     <meta property="og:image" content="https://laraxot.github.io/doc_xot/assets/img/logo.png" />
     <meta property="og:type" content="website" />
 
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     
-    <title>Modulo Xot | ModelService</title>
+    <title>Modulo Xot | Nested Resource</title>
 
     <link rel="home" href="https://laraxot.github.io/doc_xot/">
     <link rel="icon" href="/favicon.ico">
@@ -209,7 +209,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/doc_xot/docs/service/model"
-            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
+            class="lvl1   nav-menu__item hover:text-blue-500"
         >
             Model
         </a>
@@ -314,7 +314,7 @@
             <li class="pl-4">
             
         <a href="https://laraxot.github.io/doc_xot/docs/filament/nested-resource"
-            class="lvl1   nav-menu__item hover:text-blue-500"
+            class="lvl1  active font-semibold text-blue-500 nav-menu__item hover:text-blue-500"
         >
             Nested Resource
         </a>
@@ -344,266 +344,179 @@
         </nav>
 
         <div class="DocSearch-content w-full lg:w-3/5 break-words pb-16 lg:pl-4" v-pre>
-            <h1>ModelService</h1>
+            <h1 id="nested-resource">Nested Resource</h1>
 
-<h3>Returns the instance of the class</h3>
+<h2>Installazione</h2>
 
-<pre><code class="language-php">public static function make(): self
+<p>Per creare una nested resource su Filament, e quindi una route annidata, come ad esempio:</p>
+
+<pre><code class="language-bash">http://sito.com/categories/{category}/products/{product}/variations
 </code></pre>
 
-<p>Example</p>
+<p>utilizziamo questo pacchetto:</p>
 
-<pre><code class="language-php">ModelService::make();
+<pre><code class="language-bash">https://github.com/laraxot/filament-nested-resources.git
 </code></pre>
 
-<h3>Set the property <em>model</em> from the <em>model instance</em></h3>
+<p>Per utilizzare il pacchetto bisogna installarlo come package.</p>
 
-<pre><code class="language-php">public function setModel(Model $model): self {
-</code></pre>
+<p>Quindi segui la seguente procedura:</p>
 
-<p>Example</p>
+<ul>
+<li><p>Nella cartella "laravel" crea la sotto-cartella "packages"</p></li>
+<li><p>Nella cartella packages esegui il seguente comando da terminale:</p></li>
+</ul>
 
-<pre><code class="language-php">$row=User::get()-&gt;first();
-ModelService::make()-&gt;setModel($row): self {
-</code></pre>
-
-<h3>Set the property <em>model</em> from the <em>class name with namespace</em></h3>
-
-<pre><code class="language-php">public function setModelClass(string $class): self {
-</code></pre>
-
-<p>Example</p>
-
-<pre><code class="language-php">ModelService::make()-&gt;setModelClass(User::class): self {
-</code></pre>
-
-<h3>Uses the model property and search the passed <strong>$data</strong> in its <em>relationships</em></h3>
-
-<pre><code class="language-php">public function getRelationshipsAndData(array $data): array
-</code></pre>
-
-<p>Example</p>
-
-<pre><code class="language-php">/*
-Profile table
-$table-&gt;bigIncrements('id');
-$table-&gt;string('location')-&gt;nullable();
-$table-&gt;integer('user_id')-&gt;nullable();
-*/
-
-/*
-User table
-$table-&gt;bigIncrements('id');
-$table-&gt;string('first_name')-&gt;nullable();
-$table-&gt;string('email')-&gt;nullable();
-*/
-
-/*
-Profile model
-public function user(): BelongsTo {
-    return $this-&gt;belongsTo(User::class);
-}
-*/
-
-$profile=Profile::get()-&gt;first();
-ModelService::make()-&gt;setModel($profile)-&gt;getRelationshipsAndData(['first_name'=&gt;'Davide','email'=&gt;'davide@davide.xx','location'=&gt;'Venezia']);
-</code></pre>
-
-<p>Get class methods inside <em>model</em> property</p>
-
-<pre><code class="language-php">$methods = get_class_methods($model);
-</code></pre>
-
-<p>Filter <em>methods data</em> instead of simple properties data</p>
-
-<pre><code class="language-php">$data = collect($data)-&gt;filter(
-function ($item, $key) use ($methods) {
-    return \in_array($key, $methods, true);
-})
+<pre><code class="language-bash">git submodule add https://github.com/laraxot/filament-nested-resources.git
 </code></pre>
 
 <ul>
-<li>If the array key is not a strings returns error</li>
-<li>Set $rows as the model relation to $k (the key)</li>
-<li>Initialize $related to null</li>
-<li><p>If $rows has the method getRelated, sets $related to the <em>model of its relationship</em></p></li>
-<li><p><strong>Returns the:</strong></p></li>
-<li>relationship type (BelongsTo, HasMany, ManyToMany, ecc..)</li>
-<li>relation instance</li>
-<li>related model</li>
-<li>related attributes</li>
-<li>name of the relation (user, profile, relatedModelName, ecc)</li>
-<li>relationship itself</li>
+<li>Nel file composer.json della cartella "laravel" aggiungi le seguenti linee:</li>
 </ul>
 
-<pre><code class="language-php">)-&gt;map(
-    function ($v, $k) use ($model, $data) {
-        if (! \is_string($k)) {
-            dddx([$k, $v, $data]);
-        }
+<p>Dentro alla sezione "require":</p>
 
-        $rows = $model-&gt;$k();
-        $related = null;
-        if (\is_object($rows) &amp;&amp; method_exists($rows, 'getRelated')) {
-            $related = $rows-&gt;getRelated();
-        }
-
-        return (object) [
-            'relationship_type' =&gt; class_basename($rows),
-            'is_relation' =&gt; $rows instanceof \Illuminate\Database\Eloquent\Relations\Relation,
-            'related' =&gt; $related,
-            'data' =&gt; $v,
-            'name' =&gt; $k,
-            'rows' =&gt; $rows,
-        ];
-    })
+<pre><code class="language-php">"sevendays-digital/filament-nested-resources": "*",
 </code></pre>
 
-<h3>Returns the class associated with its name (morphmapped)</h3>
+<p>Dentro alla sezione "repositories":</p>
 
-<pre><code class="language-php">public function getPostType(): string {
-</code></pre>
-
-<p>Example</p>
-
-<pre><code class="language-php">$profile=PressPost::get()-&gt;first();
-ModelService::make()-&gt;setModel($profile)-&gt;getPostType();
-</code></pre>
-
-<p>Reads <em>morph_map</em> value from the morph_map.php configuration, inside every domain</p>
-
-<pre><code class="language-php">$models = config('morph_map');
-
-/* 
-Example
-
-return [
-    'model1' =&gt; 'Modules\ModuleName\Models\Model1',
-    'model2' =&gt; 'Modules\ModuleName\Models\Model2',
-    'model3' =&gt; ''Modules\ModuleName\Models\Model3',
-];
-*/
-</code></pre>
-
-<p>Serch the name of the $model class inside morph_map.php array (in this case is PressPost)</p>
-
-<pre><code class="language-php">$post_type = collect($models)-&gt;search(\get_class($model));
-</code></pre>
-
-<p>If it doesn't fine anything it sets $post_type to the <strong>snake case name</strong> of the setted $this->model (PressPost)</p>
-
-<pre><code class="language-php">if (false === $post_type) {
-    $post_type = snake_case(class_basename($model));
-
-/*  
-$post_type='press_post'*/
-</code></pre>
-
-<p>Set the morph map for polymorphic relation, and return an array</p>
-
-<pre><code class="language-php">    Relation::morphMap([$post_type =&gt; \get_class($model)]);
-    /* Return
-    ['press_post' =&gt; 'Modules\ModuleName\Models\PressPost']
-    */
+<pre><code class="language-php">{
+    "type": "path",
+    "url": "./packages/sevendays-digital/filament-nested-resources"
 }
 </code></pre>
 
-<p>Set the morph map for polymorphic relation, and return an array</p>
+<p>Poi dentro al file .gitmodules</p>
 
-<pre><code class="language-php">    Relation::morphMap([$post_type =&gt; \get_class($model)]);
-    /* Return
-    ['press_post' =&gt; 'Modules\ModuleName\Models\PressPost']
-    */
-}
+<pre><code class="language-bash">[submodule "packages/sevendays-digital/filament-nested-resources"]
+    path = packages/sevendays-digital/filament-nested-resources
+    url = https://github.com/laraxot/filament-nested-resources.git
 </code></pre>
 
-<p>Returns the previous name => class association</p>
+<p>Ok, a questo punto il pacchetto dovrebbe funzionare.</p>
 
-<pre><code class="language-php">return (string) $post_type;
-</code></pre>
+<h2>Utilizzo</h2>
 
-<h3>Get relation names from <em>model</em> property</h3>
+<p>Il pacchetto può essere utilizzato principalmente in due modi diversi.</p>
 
-<pre><code class="language-php">public function getRelations(): array {
-</code></pre>
-
-<p>Example</p>
-
-<pre><code class="language-php">$profile=PressPost::get()-&gt;first();
-ModelService::make()-&gt;setModel($profile)-&gt;getRelations();
-</code></pre>
+<h3>Relazioni hasOne, hasMany (dove l'inversa è BelogsTo)</h3>
 
 <ul>
-<li>The reflection class is used to get information about the current state of the application.</li>
-<li>It's called reflection, because it looks at itself, and can tell you information about the program your running, at runtime.</li>
+<li><p>Nella Filament Resource figlia, estendi NestedResource al posto di Resource</p></li>
+<li><p>inserisci il parent nel metodo getParent</p></li>
 </ul>
 
-<pre><code class="language-php">$reflector = new ReflectionClass($model);
-</code></pre>
+<pre><code class="language-php">use SevendaysDigital\FilamentNestedResources\Columns\ChildResourceLink;
+use SevendaysDigital\FilamentNestedResources\NestedResource;
 
-<p>Get the methods from the reflected $model class</p>
-
-<pre><code class="language-php">$methods = $reflector-&gt;getMethods();
-</code></pre>
-
-<p>Get the doc comment if it exists, otherwise false</p>
-
-<pre><code class="language-php">foreach ($methods as $method) {
-    $doc = $method-&gt;getDocComment();
-</code></pre>
-
-<p>Get the method name (inside foreach)</p>
-
-<pre><code class="language-php">    $res = $method-&gt;getName();
-</code></pre>
-
-<ul>
-<li>If the number of required parameters for this methos are Zero</li>
-<li>If the class of this method is $model</li>
-<li><p>If the method's $doc isn't false and strpos has the substring <em>&#92;Relations&#92;</em></p></li>
-<li><p>Then the array $relations adds the method name ($method->getName())</p></li>
-</ul>
-
-<pre><code class="language-php">if (0 === $method-&gt;getNumberOfRequiredParameters() &amp;&amp; $method-&gt;class === \get_class($model)) {
-        if ($doc &amp;&amp; false !== strpos($doc, '\\Relations\\')) {
-        $relations[] = $res;
+class ChildModelResource extends NestedResource
+{
+    public static function getParent(): string
+    {
+        return ParentModelResource::class;
     }
 }
-
-return $relations;
-</code></pre>
-
-<h3>Get relationships from <em>model</em></h3>
-
-<pre><code class="language-php">public function getRelationships(): array {
-</code></pre>
-
-<p>Example</p>
-
-<pre><code class="language-php">$profile=PressPost::get()-&gt;first();
-ModelService::make()-&gt;setModel($profile)-&gt;getRelationships();
 </code></pre>
 
 <ul>
-<li>Gets the reflection class from $model</li>
-<li><p>Gets the public methods from reflection class, and iterates on themù</p></li>
-<li><p>If the current function name (getRelationships) is equal to the method name</p></li>
-<li>OR If the method has more then 0 parameters</li>
-<li>OR if the method class name is different then model class name</li>
-<li>Then the cycle stops and continue the next iteration</li>
+<li>per ogni pagina (List, Edit, Create) della Filament Resource, devi usare questo Trait:</li>
 </ul>
 
-<pre><code class="language-php">$model = $this-&gt;model;
-$relationships = [];
+<pre><code class="language-php">use SevendaysDigital\FilamentNestedResources\ResourcePages\NestedPage;
+</code></pre>
 
-foreach ((new ReflectionClass($model))-&gt;getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-    if ($method-&gt;class !== \get_class($model)
-    || ! empty($method-&gt;getParameters())
-    || __FUNCTION__ === $method-&gt;getName()
-    ) {
-        continue;
+<ul>
+<li>nella Resource Padre, aggiungi questo bottone alla tabella:</li>
+</ul>
+
+<pre><code class="language-php">public static function table(Table $table): Table
+{
+    return $table
+        -&gt;columns([
+            ChildResourceLink::make(ChildModelResource::class),
+        ]);
+}
+</code></pre>
+
+<ul>
+<li><p>aggiungi la relazione al modello che corrisponde alla Resource Genitore (hasOne, hasMany)</p></li>
+<li><p>aggiungi la relazione INVERSA al modello che corrisponde alla Resource Figlia (BelongsTo)</p></li>
+</ul>
+
+<h3>Relazioni belongsToMany (molti a molti)</h3>
+
+<ul>
+<li><p>Nella Filament Resource figlia, estendi NestedResource al posto di Resource</p></li>
+<li><p>inserisci il parent nel metodo getParent</p></li>
+</ul>
+
+<pre><code class="language-php">use SevendaysDigital\FilamentNestedResources\Columns\ChildResourceLink;
+use SevendaysDigital\FilamentNestedResources\NestedResource;
+
+class ChildModelResource extends NestedResource
+{
+    public static function getParent(): string
+    {
+        return ParentModelResource::class;
+    }
+}
+</code></pre>
+
+<ul>
+<li>per ogni pagina (List, Edit, Create) della Filament Resource, devi usare questo Trait:</li>
+</ul>
+
+<pre><code class="language-php">use SevendaysDigital\FilamentNestedResources\ResourcePages\NestedPage;
+</code></pre>
+
+<ul>
+<li>nella Resource Padre, aggiungi questo bottone alla tabella:</li>
+</ul>
+
+<pre><code class="language-php">public static function table(Table $table): Table
+{
+    return $table
+        -&gt;columns([
+            ChildResourceLink::make(ChildModelResource::class),
+        ]);
+}
+</code></pre>
+
+<ul>
+<li><p>aggiungi la relazione al modello che corrisponde alla Resource Genitore (belongsToMany)</p></li>
+<li><p>aggiungi la relazione INVERSA al modello che corrisponde alla Resource Figlia (belongsToMany)</p></li>
+<li><p>IN AGGIUNTA A QUELLO CHE HO SCRITTO SOPRA, aggiungi questo scope al modello FIGLIO</p></li>
+</ul>
+
+<pre><code class="language-php">public function scopeOfMODELLO_PADRE($query,$parent)
+    {
+        return $query-&gt;whereRelation('ModelloPadrePlurale', 'ModelloPadrePlurale.key', $parent);
     }
 </code></pre>
+
+<h3>Accedere al genitore</h3>
+
+<p>Quando hai bisogno del genitore nel contesto di Livewire, come ad esempio nel form, puoi aggiungere il secondo argomento al tuo metodo di form:</p>
+
+<pre><code class="language-php">public static function form(Form $form, ?Event $parent = null): Form;
+</code></pre>
+
+<p>Dove Event è il modello che dovrebbe essere il genitore.</p>
+
+<h3>Barra laterale</h3>
+
+<p>Per impostazione predefinita, quando sei in un "contesto", la barra laterale registrerà la voce di menu per tale risorsa.</p>
+
+<p>Quindi, se ti trovi all'interno di un Progetto che ha documenti, la barra laterale mostrerà i documenti quando sei su un progetto o su un livello più profondo.</p>
+
+<p>Se non desideri questo comportamento, puoi impostare <strong>shouldRegisterNavigationWhenInContext</strong> su <strong>false</strong> nella risorsa figlia.</p>
+
+<h3>Note</h3>
+
+<p>Assicurati semplicemente di impostare uno slug personalizzato per le risorse in modo che generi percorsi univoci.</p>
+
+<p>https://filamentphp.com/docs/2.x/admin/resources/getting-started#customizing-the-url-slug</p>
         </div>
     </div>
 </section>
